@@ -9,11 +9,11 @@ struct Node {
     }
 };
 
-class lock_free_stack {
+class FreeLockStack {
 public:
     void push(int& data) {
         Node* new_node = new Node(data);
-        //Âîçâðàòèòü òåêóùåå çíà÷åíèå àòîìàðíîé ïåðåìåííîé
+        //Ã‚Ã®Ã§Ã¢Ã°Ã Ã²Ã¨Ã²Ã¼ Ã²Ã¥ÃªÃ³Ã¹Ã¥Ã¥ Ã§Ã­Ã Ã·Ã¥Ã­Ã¨Ã¥ Ã Ã²Ã®Ã¬Ã Ã°Ã­Ã®Ã© Ã¯Ã¥Ã°Ã¥Ã¬Ã¥Ã­Ã­Ã®Ã©
         new_node->next = head.load();
         while (!head.compare_exchange_weak(new_node->next, new_node));
     }
