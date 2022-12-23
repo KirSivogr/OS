@@ -1,75 +1,58 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <mutex>
 using namespace std;
 
-long long MatrixPower(vector <vector <long long>>& m, vector <vector <long long>>& m1,
-	int row, int column) {
+int k = 0;
+int t;
+mutex mtx;
 
-	long long result = 0;
-	for (int i = 0; i < m[0].size(); i++) {
-		result += m[row][i] * m1[i][column];
+bool isPrime(int n){
+	if (n == 0 || n == 1) {
+		return false;
 	}
-	return result;
+	for(int i = 2;i <= sqrt(n) ; i++) {
+		if (n % i == 0) {
+			return false;
+		}
+	}	
+	return true;
 }
 
+void PrimeCheck(vector <int>& a, vector <bool>& p) {
+    while (true) {
+        unique_lock<mutex> ul(mtx);
+        if (k == a.size()) {
+            return;
+        }
+    	k++;
+    	t = k;
+        uk.unlock();
+        if(isPrime(vec[temp - 1]))
+            p[temp - 1] = 1;
+    }
+}
 int main() {
-	long long row, column;
-	long long row_, column_;
-
-	cout << "Enter the number of rows of the first matrix: ";
-	cin >> row;
-	cout << "Enter the number of columns of the first matrix: ";
-	cin >> column;
-
-	cout << "Enter the number of rows of the second matrix: ";
-	cin >> row_;
-	cout << "Enter the number of columns of the second matrix: ";
-	cin >> column_;
-
-	if (column != row_) {
-		cout << "Matrix multiplication is not possible";
-		return 0;
+    int n;
+    cin >> n;
+    vector <int> a(n);
+    vector <bool> p(n);
+    for (int i = 0; i < vec.size(); i++) {
+        cin >> a[i];
+    }
+    int sz;
+    cin >> sz;
+    vector <thread> th;
+    for (int i = 0; i < sz; i++) {
+        th.emplace_back(PrimeCheck, ref(vec), ref(res));
+    }
+    for (auto& i : th) {
+        i.join();
+    }
+    for (int i = 0; i < res.size(); i++) {
+       	if (p[i]) {
+		cout <<a[i] <<" is prime";
 	}
-
-	vector <vector <long long>> firstMatrix(row, vector <long long>(column));
-	vector <vector <long long>> secondMatrix(row_, vector <long long>(column_));
-
-	cout << "Fill in the first matrix\n";
-	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < column; j++) {
-			cin >> firstMatrix[i][j];
-		}
-	}
-
-	cout << "Fill in the second matrix\n";
-	for (int i = 0; i < row_; i++) {
-		for (int j = 0; j < column_; j++) {
-			cin >> secondMatrix[i][j];
-		}
-	}
-
-	vector <vector <long long>> resultMatrix(row, vector <long long>(column_));
-	int beg = clock();
-	vector <thread> threads;
-	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < column_; j++) {
-			threads.emplace_back([&resultMatrix, &firstMatrix, &secondMatrix, i, j]() {
-				resultMatrix[i][j] = MatrixPower(firstMatrix, secondMatrix, i, j);
-				});
-		}
-	}
-
-	for (auto& i : threads) {
-		i.join();
-	}
-
-	for (auto& i : resultMatrix) {
-		for (auto& j : i) {
-			cout << j << " ";
-		}
-		cout << endl;
-	}
-	int end = clock();
-	cout << end - beg;
+    }
 }
