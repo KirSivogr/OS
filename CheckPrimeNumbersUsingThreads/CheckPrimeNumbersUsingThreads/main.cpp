@@ -29,8 +29,8 @@ void PrimeCheck(vector <int>& a, vector <bool>& p) {
     	k++;
     	t = k;
         ul.unlock();
-        if(isPrime(vec[temp - 1]))
-            p[temp - 1] = 1;
+        if(isPrime(vec[t - 1]))
+            p[t - 1] = 1;
     }
 }
 int main() {
