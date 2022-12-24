@@ -52,7 +52,7 @@ int main() {
     }
     for (int i = 0; i < res.size(); i++) {
        	if (p[i]) {
-		cout <<a[i] <<" is prime";
+		cout <<a[i] <<" is prime" <<endl;
 	}
     }
 }
