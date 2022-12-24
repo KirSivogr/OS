@@ -9,7 +9,7 @@ add_subdirectory(stack)
 add_executable(cmakeProject ${SOURCES} ${HEADERS})
  
 set_target_properties(
-       cmkpr PROPERTIES
+       cmakeProject PROPERTIES
        CXX_STANDARD 17
        CXX_STANDARD_REQUIRED ON
 )
