@@ -1,16 +1,17 @@
 #include <atomic>
 #include <thread>
+using namespace std;
 
 class Spinlock {
-    std::atomic_flag flag;
+    atomic <bool> flag;
 public:
-    Spinlock() : flag(ATOMIC_FLAG_INIT) {}
+    Spinlock() : flag(false) {}
 
     void lock() {
-        while (flag.test_and_set());
+        while (flag.exchange(true));
     }
 
     void unlock() {
-        flag.clear();
+        flag.store(false);
     }
 };
