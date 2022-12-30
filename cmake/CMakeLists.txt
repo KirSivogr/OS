@@ -1,12 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(cmakeProject) 
-
-set(SOURCES main.cpp solver/solver.cpp)
-set(HEADERS solver/solver.h)
 add_subdirectory(stack)
 
-add_executable(cmakeProject ${SOURCES} ${HEADERS})
+add_executable(cmakeProject main.cpp solver/solver.cpp solver/solver.h)
  
 set_target_properties(
        cmakeProject PROPERTIES
